@@ -27,11 +27,12 @@ df %>%
 	group_by(code) %>%
 		do(vals = bind_cols(data.frame(.)))
 
-# does work, but retains code columns
+# does work, nice trick with []
 i=1
 out<-bind_cols(split(df, df$code))
 out[1:(i+2)!=(i+2)]
 
+# magrittr solution with %$% to pass left to right
 out <- df %>% 
   group_by(code) %>% 
   do(each_df = select(., -code)) %$%
