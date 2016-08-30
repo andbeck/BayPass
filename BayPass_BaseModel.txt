@@ -1,0 +1,2 @@
+g_baypass -npop 8 -gfile ALLELEFILE -efile ENVFILE -poolsizefile SAMPLEFILE -d0yij 20 -outprefix ana1_
+

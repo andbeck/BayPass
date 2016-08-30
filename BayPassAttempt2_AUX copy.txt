@@ -1,0 +1,2 @@
+g_baypass -npop 8 -gfile ALLELEFILE -efile ENVFILE -poolsizefile SAMPLEFILE —audxmodel -d0yij 20 -outprefix ana2_
+

@@ -1,0 +1,56 @@
+load('~/alan/R/Robj/datUse.clean.Rdata')
+ls()
+head(datUse)
+alleleC1<-datUse$dp.down#
+alleleC1<-datUse$ad.down#
+ss<-datUse$ad+datUse$dp
+rownames(alleleC1)<- datUse$pop
+alleleC1<-data.frame(datUse$dp.down)#
+alleleC1<-data.frame(datUse$ad.down)#
+ss<-data.frame(datUse$ad+datUse$dp)
+rownames(alleleC1)<- datUse$pop
+levels(datUse$pop)
+levels(factor(datUse$pop))
+head(datUse$pop)
+tail(datUse$pop)
+library(dplyr)
+wrk<-filter(datUse, pop!="SoF")
+alleleC1<-data.frame(wrk$dp.down)#
+alleleC1<-data.frame(wrk$ad.down)#
+ss<-data.frame(wrk$ad+wrk$dp)
+out.temp<-interleave(alleleC1,alleleC2)
+library(gdata)
+install.packages('gdata')
+library(gdata)
+out.temp<-interleave(alleleC1,alleleC2)
+alleleC2<-data.frame(wrk$ad.down)
+out.temp<-interleave(alleleC1,alleleC2)
+head(out.temp)
+?interleave
+out.temp<-interleave(t(alleleC1),t(alleleC2))
+head(out.temp)
+t(alleleC1)
+alleleC1
+alleleC1[1:10]
+alleleC1[,1:10]
+alleleC1[,1]
+alleleC1[1:10,1]
+rbind(alleleC1[1:10,1],alleleC2[1:10,1])
+alleleC1<-data.frame(wrk$dp.down)#
+alleleC2<-data.frame(wrk$ad.down)
+rbind(alleleC1[1:10,1],alleleC2[1:10,1])
+interleave(alleleC1[1:10,1],alleleC2[1:10,1])
+interleave(t(alleleC1[1:10,1]),t(alleleC2[1:10,1]))
+?interleave
+a <- matrix(1:10,ncol=2,byrow=TRUE)#
+b <- matrix(letters[1:10],ncol=2,byrow=TRUE)
+a
+b
+interleave(a,b)
+alleleCounts<-cbind(alleleC1, alleleC2)
+alleleCounts(1:10,)
+alleleCounts<-cbind(alleleC1, alleleC2)#
+alleleCounts(1:10,)
+alleleCounts[1:10,]
+wrk2<-select(wrk, 1:10)
+wrk2
