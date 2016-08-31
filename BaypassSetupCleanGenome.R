@@ -33,6 +33,8 @@ outSmall<-methodBergland(wrkSmall)
 
 # Massive
 system.time(BayPassInput<-methodBergland(wrk))
+
+# write the text file
 write.table(BayPassInput, 'BayPassInputNew.txt', col.names = FALSE, row.names = FALSE)
 
 
