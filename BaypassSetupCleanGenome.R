@@ -3,37 +3,37 @@
 # preping to use the AUX model
 # Updated AGAIN - now working in GitHub
 # ----------------------------------------------------------------------------------------
-
-library(gdata)
 library(dplyr)
-
-# get original allele frequency data
-
-# load('~/Dropbox/####WorkingProjects/ResequencingAnalysisTools/BerglandFiles/CrispOutput_Process/bed.obj_alan.RData')
+library(ggplot2)
+library(magrittr)
+library(data.table)
+library(foreach)
 
 # NEW DATA
-load('~/alan/R/Robj/datUse.clean.Rdata')
+load('~/Documents/Repos/BayPass/datUse.clean.Rdata')
+#load('~/Repos/BayPass/datUse.clean.Rdata')
 
 wrk<-filter(datUse, pop!="SoF")
+names(wrk)
 
-wrk2<-select(wrk, 1:10)
+# METHOD FOR BayPass Data setup
+ 
+ 	methodBergland <- function(dat) {
+ 		setkey(dat, pop)
+ 		
+ 		pops <- unique(dat$pop)
+ 		
+ 		o <- foreach(i=pops)%do%{dat[J(i), c("dp.down", "ad.down"), with=F]}
+ 		bind_cols(o)
+ 	}
 
-wrk %>% 
-	group_by(pop) %>%
-		
+# test
+wrkSmall <- wrk %>% group_by(pop) %>% slice(1:10)
+outSmall<-methodBergland(wrkSmall)
 
-
-alleleC1<-data.frame(wrk$dp.down)
-alleleC2<-data.frame(wrk$ad.down)
-
-alleleCounts<-cbind(alleleC1, alleleC2)
-alleleCounts[1:10,]
-
-
-
-
-
-
+# Massive
+system.time(BayPassInput<-methodBergland(wrk))
+write.table(BayPassInput, 'BayPassInputNew.txt', col.names = FALSE, row.names = FALSE)
 
 
 # make the covariate File
