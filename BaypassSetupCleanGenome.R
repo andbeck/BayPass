@@ -37,9 +37,8 @@ system.time(BayPassInput<-methodBergland(wrk))
 # write the text file
 write.table(BayPassInput, 'BayPassInputNew.txt', col.names = FALSE, row.names = FALSE)
 
-
 # make the covariate File
-covs<-read.csv("~/baypass_2.1/DaphBayPass/pH_Temp_Lat_8_ponds.csv")
+covs<-read.csv("~/Documents/Repos/BayPass/pH_Temp_Lat_8_ponds.csv")
 
 predR<-scale(covs$code)
 temp<-scale(covs$Temp)
@@ -53,6 +52,6 @@ envfile
 ss<-rep(100,8)
 
 # write
-write(out.temp, "~/baypass_2.1/DaphBayPass/ALLELEFILE", ncolumns=16)
-write(t(envfile), "~/baypass_2.1/DaphBayPass/ENVFILE", ncolumns = 8)
-write(t(ss), "~/baypass_2.1/DaphBayPass/SAMPLEFILE", ncolumns = 8)
+write.table(BayPassInput, 'ALLELEFILE', col.names = FALSE, row.names = FALSE)
+write(t(envfile), "~/Documents/Repos/BayPass/ENVFILE", ncolumns = 8)
+write(t(ss), "~/Documents/Repos/BayPass/SAMPLEFILE", ncolumns = 8)
