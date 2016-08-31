@@ -49,7 +49,7 @@ envfile<-t(cbind(predR, lat, temp, pH))
 envfileB<-matrix(envfile[1,], nrow =1)
 envfileBLat<-envfile[1:2,]
 envfileBLatTemp<-envfile[1:3,]
-envfileBLatTemp<-envfile[1:4,]
+envfileBLatTempPH<-envfile[1:4,]
 
 # make the samplesize file
 ss<-rep(100,8)
