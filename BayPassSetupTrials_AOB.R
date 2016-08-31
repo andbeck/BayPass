@@ -1,7 +1,9 @@
 library(dplyr)
+library(ggplot2)
 library(magrittr)
 library(data.table)
 library(foreach)
+
 
 ### functions
 	makeData <- function(nSnps, nPops) {
@@ -45,10 +47,11 @@ library(foreach)
 			testDat <- makeData(nSnps=i, nPops=j)
 		
 			beck1 <- system.time(methodBeckermanOne(testDat))
+			beck2 <- system.time(methodBeckermanTwo(testDat))
 			berg1 <- system.time(methodBergland(testDat))
 			
-			data.table(time=c(beck1[2], berg1[2]), 
-						method=c("beck1", "berg1"),
+			data.table(time=c(beck1[2], beck2[2], berg1[2]), 
+						method=c("beck1", "beck2", "berg1"),
 						nSNPs=i,
 						nPops=j)
 		
@@ -56,7 +59,9 @@ library(foreach)
 	}
 	
 	
-	ggplot(data=o, aes(x=log10(nSNPs), y=time, group=nPops, color=nPops)) + geom_line() + facet_wrap(~method)
+ggplot(data=o, aes(x=log10(nSNPs), y=time, group=nPops, color=nPops)) + 
+	geom_line() + 
+	facet_wrap(~method)
 	
 	
 	
