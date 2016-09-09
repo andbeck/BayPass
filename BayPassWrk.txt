@@ -1,4 +1,5 @@
 g_baypass -npop 8 -gfile ALLELEFILE -efile ENVFILE_BASE -poolsizefile SAMPLEFILE —audxmodel -d0yij 20 -outprefix anaBASE_ &
+g_baypass -npop 8 -gfile ALLELEFILE -efile ENVFILE_BASE -poolsizefile SAMPLEFILE —audxmodel -d0yij 20 -outprefix anaBASE_ &
 g_baypass -npop 8 -gfile ALLELEFILE -efile ENVFILE_BLat -poolsizefile SAMPLEFILE —audxmodel -d0yij 20 -outprefix anaBLat_ &
 g_baypass -npop 8 -gfile ALLELEFILE -efile ENVFILE_BLatTemp -poolsizefile SAMPLEFILE —audxmodel -d0yij 20 -outprefix anaBLatTemp_ &
 g_baypass -npop 8 -gfile ALLELEFILE -efile ENVFILE_BLatTempPH -poolsizefile SAMPLEFILE —audxmodel -d0yij 20 -outprefix anaBLatTempPH_ &
