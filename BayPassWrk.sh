@@ -11,8 +11,8 @@ boomShackalaka () {
 	-gfile ALLELEFILE \
 	-efile ENVFILE_${eFile_suffix} \
 	-poolsizefile SAMPLEFILE \
-	—audxmodel \
-	-d0yij 20 \
+	—auxmodel \
+	-d0yij 10 \
 	-outprefix ana${eFile_suffix}_
 }
 export -f boomShackalaka
