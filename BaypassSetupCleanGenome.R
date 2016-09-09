@@ -51,6 +51,16 @@ envfileBLat<-envfile[1:2,]
 envfileBLatTemp<-envfile[1:3,]
 envfileBLatTempPH<-envfile[1:4,]
 
+# as per instruction from Gauthier, make a single envfile
+# use PCA on env variables
+# result is a phLat variable, a temp variable, and then our predation.
+
+prenv<-t(prcomp(covs[,c("pH", "Temp", "LatDec")], center = TRUE, scale = TRUE)$x[,1:2])
+prenv<-rbind(prenv, t(scale(covs[,'code'])))
+rownames(prenv)<-c("pHLat", 'Temp','Predation')
+prenv
+write(t(prenv), "prENVFILE", ncolumns = 8)
+
 # make the samplesize file
 ss<-rep(100,8)
 
