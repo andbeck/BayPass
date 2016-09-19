@@ -1,3 +1,6 @@
 *.RData filter=lfs diff=lfs merge=lfs -text
 *.Rdata filter=lfs diff=lfs merge=lfs -text
 *ALLELEFILE* filter=lfs diff=lfs merge=lfs -text
+*_pi_* filter=lfs diff=lfs merge=lfs -text
+*_yij_* filter=lfs diff=lfs merge=lfs -text
+*_betai_* filter=lfs diff=lfs merge=lfs -text
