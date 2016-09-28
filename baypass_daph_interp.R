@@ -18,9 +18,30 @@ corrplot(omega_plot,method = "square", order = 'hclust',mar = c(2,1,1,0))
 plot(hclust(dist(omega_plot), 'complete'))
 
 # This needs to be developed to establish the criteria for detecting XtX outlier
-# see paper
-#
-simDat<-simulate.baypass(omega, sample.size = 10000)
+# DETAIL provided by Gautier
+
+# omega read in above
+pi.params<-as.numeric(read.table("anaprEnvfile__summary_beta_params.out",h=T)[,2]) ##the parmeters of the Beta distribution
+poolsize<-as.numeric(read.table("SAMPLEFILE")) #the original pool sizes
+readcounts<-geno2YN("ALLELEFILE") # the orginal read counts (needed to sample from the observed coverages)
+
+simulate.baypass(omega,nsnp=250000,
+	beta.pi = pi.params,
+	sample.size = poolsize, 
+	coverage=readcounts$NN,
+	pi.maf = 0.01,
+	suffix="pods",
+	remove.fixed.loci = F)
+
+
+
+# The real games begin here.
+
+# Step 1: use the pods analysis to identify the 99% ile of XtX and betas
+
+
+# Step 2: use these as thresholds for identifying SNPS.
+
 
 beta<-read.table('anaprEnvfile__summary_betai_reg.out', header = TRUE)
 XtX<-read.table('anaprEnvfile__summary_pi_xtx.out', header = TRUE)

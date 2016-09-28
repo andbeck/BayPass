@@ -4,3 +4,4 @@
 *_pi_* filter=lfs diff=lfs merge=lfs -text
 *_yij_* filter=lfs diff=lfs merge=lfs -text
 *_betai_* filter=lfs diff=lfs merge=lfs -text
+*.pods filter=lfs diff=lfs merge=lfs -text
