@@ -54,3 +54,62 @@ alleleCounts(1:10,)
 alleleCounts[1:10,]
 wrk2<-select(wrk, 1:10)
 wrk2
+# setups#
+library(corrplot)#
+library(ape)#
+library(ggplot2)#
+library(gridExtra)#
+library(dplyr)#
+library(ggthemes)#
+#
+source('baypass_utils.R') # this is in the repo#
+#
+# Covariance matrix#
+omega<-as.matrix(read.table("anaprEnvfile__mat_omega.out"))#
+omega<-matrix(omega, 8,8, byrow = TRUE, dimnames=list(c(paste("pop:",1:8)), c(paste("pop:",1:8))))#
+#
+omega_plot<-cov2cor(omega)#
+par(mfrow = c(2,1))#
+corrplot(omega_plot,method = "square", order = 'hclust',mar = c(2,1,1,0))#
+plot(hclust(dist(omega_plot), 'complete'))#
+#
+# This needs to be developed to establish the criteria for detecting XtX outlier#
+# DETAIL provided by Gautier
+install.packages(c('corrplot','ape'))
+# setups#
+library(corrplot)#
+library(ape)#
+library(ggplot2)#
+library(gridExtra)#
+library(dplyr)#
+library(ggthemes)#
+#
+source('baypass_utils.R') # this is in the repo#
+#
+# Covariance matrix#
+omega<-as.matrix(read.table("anaprEnvfile__mat_omega.out"))#
+omega<-matrix(omega, 8,8, byrow = TRUE, dimnames=list(c(paste("pop:",1:8)), c(paste("pop:",1:8))))#
+#
+omega_plot<-cov2cor(omega)#
+par(mfrow = c(2,1))#
+corrplot(omega_plot,method = "square", order = 'hclust',mar = c(2,1,1,0))#
+plot(hclust(dist(omega_plot), 'complete'))#
+#
+# This needs to be developed to establish the criteria for detecting XtX outlier#
+# DETAIL provided by Gautier
+pi.params<-as.numeric(read.table("anaprEnvfile__summary_beta_params.out",h=T)[,2]) ##the parmeters of the Beta distribution
+pi.params
+poolsize<-as.numeric(read.table("poolsize")) #the original pool sizes
+poolsize<-as.numeric(read.table("POOLSIZE")) #the original pool sizes
+list.files()
+poolsize<-as.numeric(read.table("SAMPLEFILE")) #the original pool sizes
+poolsize
+geno2YN
+readcounts<-geno2YN("ALLELEFILE") # the orginal read counts (needed to sample from the observed coverages)
+simulate.baypass(omega,nsnp=250000,#
+	beta.pi = pi.params,#
+	sample.size = poolsize, #
+	coverage=readcounts$NN,#
+	pi.maf = 0.01,#
+	suffix="pods",#
+	remove.fixed.loci = F)
