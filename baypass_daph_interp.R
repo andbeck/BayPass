@@ -105,8 +105,10 @@ points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'black')
 title('Predation')
 
 
-####
-beta_dB_XtX<-data.frame(beta = beta$Beta_is, dB = beta$BF.dB., XtX = XtX$M_XtX)
-decisive_dB<-filter(beta_dB_XtX, dB>20 & XtX>quantile(beta_dB_XtX$XtX, 0.99))
-strongAssoc<-filter(decisive_dB, beta>=0.2|beta<=c(-0.2))
+#
+ggplot(df_predation, aes(y = BF.dB., x = XtX))+
+	geom_point(alpha = 0.1, size = 0.5)+
+	theme_base()
+
+
 
