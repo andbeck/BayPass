@@ -113,3 +113,209 @@ simulate.baypass(omega,nsnp=250000,#
 	pi.maf = 0.01,#
 	suffix="pods",#
 	remove.fixed.loci = F)
+load("/Users/apb/GitHubRepos/BayPass/BayPassInterpret.RData")
+# setups#
+library(corrplot)#
+library(ape)#
+library(ggplot2)#
+library(gridExtra)#
+library(dplyr)#
+library(ggthemes)
+library(ggthemes)
+library('ggthemes')
+install.packages('ggthemes')
+# setups#
+library(corrplot)#
+library(ape)#
+library(ggplot2)#
+library(gridExtra)#
+library(dplyr)#
+library(ggthemes)
+# Covariance matrix#
+omega<-as.matrix(read.table("anaprEnvfile__mat_omega.out"))#
+omega<-matrix(omega, 8,8, byrow = TRUE, dimnames=list(c(paste("pop:",1:8)), c(paste("pop:",1:8))))#
+#
+omega_plot<-cov2cor(omega)#
+par(mfrow = c(2,1))#
+corrplot(omega_plot,method = "square", order = 'hclust',mar = c(2,1,1,0))#
+plot(hclust(dist(omega_plot), 'complete'))
+par(mfrow = c(1,3))#
+#latitude/pH#
+plot(BF.dB. ~ XtX, data = df_latpH, pch = '.', col = 'grey', ylim = c(-10,60))#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[1,2], lty = 3, lwd = 2, col = 'green')#
+points(BF.dB. ~ XtX, data = one_keypts, pch = 21, col = 'black')#
+title('Latitude/pH')#
+#
+# temp#
+plot(BF.dB. ~ XtX, data = df_temp, pch = '.', col = 'grey', ylim = c(-10,60))#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[2,2], lty = 3, lwd = 2, col = 'green')#
+points(BF.dB. ~ XtX, data = two_keypts, pch = 21, col = 'black')#
+title('Temperature')#
+#
+# predation#
+plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = 'grey', ylim = c(-10,60))#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')#
+points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'black')#
+title('Predation')
+install.packages('hexbin')
+library(hexbin)
+?hexbinplot
+hexbinplot(BF.dB. ~ XtX, data = df_predation)
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
+?hexbinplot
+hexbinplot(BF.dB. ~ XtX, data = df_predation,#
+	panel = function(x, y){#
+		panel.abline(v = XtX_threshold)#
+		panel.abline(h = betaThreshold[1,2])#
+	}
+)
+hexbinplot(BF.dB. ~ XtX, data = df_predation,#
+	panel = function(x, y, ...){#
+		panel.abline(v = XtX_threshold)#
+		panel.abline(h = betaThreshold[1,2])#
+	})
+library(lattice)
+hexbinplot(BF.dB. ~ XtX, data = df_predation,#
+	panel = function(x, y, ...){#
+		panel.abline(v = XtX_threshold)#
+		panel.abline(h = betaThreshold[1,2])#
+	})
+hexbinplot(BF.dB. ~ XtX, data = df_predation,#
+	panel = function(x, y, ...){#
+		panel.hexbin(x,y)#
+		panel.abline(v = XtX_threshold)#
+		panel.abline(h = betaThreshold[1,2])#
+	})
+hexbinplot(BF.dB. ~ XtX, data = df_predation,#
+	panel = function(x, y, ...){#
+		panel.hexbinplot(x,y)#
+		panel.abline(v = XtX_threshold)#
+		panel.abline(h = betaThreshold[1,2])#
+	})
+ggplot(df_predation, aes(y = BF.dB., x = XtX))+#
+	geom_point(alpha = 0.1, size = 0.2)+#
+	theme_base()
+plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')#
+points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'grey')#
+title('Predation')
+plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')#
+title('Predation')
+legend(0,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21))
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
+plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Predation')
+?pdf
+pdf()#
+par(mfrow = c(1,3))#
+#latitude/pH#
+plot(BF.dB. ~ XtX, data = df_latpH, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = one_keypts, pch = 21, col = 'black')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[1,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Latitude/pH')#
+#
+# temp#
+plot(BF.dB. ~ XtX, data = df_temp, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = two_keypts, pch = 21, col = 'black')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[2,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Temperature')#
+#
+# predation#
+plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Predation')#
+dev.off()
+pdf()#
+par(mfrow = c(1,3))#
+#latitude/pH#
+plot(BF.dB. ~ XtX, data = df_latpH, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = one_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[1,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Latitude/pH')#
+#
+# temp#
+plot(BF.dB. ~ XtX, data = df_temp, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = two_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[2,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Temperature')#
+#
+# predation#
+plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Predation')#
+dev.off()
+par(mfrow = c(1,3))#
+#latitude/pH#
+plot(BF.dB. ~ XtX, data = df_latpH, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = one_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[1,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Latitude/pH')#
+#
+# temp#
+plot(BF.dB. ~ XtX, data = df_temp, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = two_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[2,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Temperature')#
+#
+# predation#
+plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Predation')
+png()#
+par(mfrow = c(1,3))#
+#latitude/pH#
+plot(BF.dB. ~ XtX, data = df_latpH, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = one_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[1,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Latitude/pH')#
+#
+# temp#
+plot(BF.dB. ~ XtX, data = df_temp, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = two_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[2,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Temperature')#
+#
+# predation#
+plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))#
+points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'grey')#
+abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')#
+abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')#
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))#
+title('Predation')#
+dev.off()

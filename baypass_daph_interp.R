@@ -84,31 +84,27 @@ load('BayPassInterpret.RData') # this should eliminate data reading and prep for
 
 par(mfrow = c(1,3))
 #latitude/pH
-plot(BF.dB. ~ XtX, data = df_latpH, pch = '.', col = 'grey', ylim = c(-10,60))
+plot(BF.dB. ~ XtX, data = df_latpH, pch = '.', col = '#00000033', ylim = c(-10,60))
+points(BF.dB. ~ XtX, data = one_keypts, pch = 21, col = 'grey')
 abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
 abline(h = betaThreshold[1,2], lty = 3, lwd = 2, col = 'green')
-points(BF.dB. ~ XtX, data = one_keypts, pch = 21, col = 'black')
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
 title('Latitude/pH')
 
 # temp
-plot(BF.dB. ~ XtX, data = df_temp, pch = '.', col = 'grey', ylim = c(-10,60))
+plot(BF.dB. ~ XtX, data = df_temp, pch = '.', col = '#00000033', ylim = c(-10,60))
+points(BF.dB. ~ XtX, data = two_keypts, pch = 21, col = 'grey')
 abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
 abline(h = betaThreshold[2,2], lty = 3, lwd = 2, col = 'green')
-points(BF.dB. ~ XtX, data = two_keypts, pch = 21, col = 'black')
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
 title('Temperature')
 
 # predation
-plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = 'grey', ylim = c(-10,60))
+plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))
+points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'grey')
 abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
 abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')
-points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'black')
+legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
 title('Predation')
-
-
-#
-ggplot(df_predation, aes(y = BF.dB., x = XtX))+
-	geom_point(alpha = 0.1, size = 0.5)+
-	theme_base()
-
 
 
