@@ -28,14 +28,22 @@ names(wrk)
  	}
 
 # test
-wrkSmall <- wrk %>% group_by(pop) %>% slice(1:10)
-outSmall<-methodBergland(wrkSmall)
+wrkSmall <- data.table(wrk) %>% group_by(pop) %>% slice(1:10)
+outSmall<-methodBergland(data.table(wrkSmall))
 
 # Massive
-system.time(BayPassInput<-methodBergland(wrk))
+system.time(BayPassInput<-methodBergland(data.table(wrk)))
 
 # write the text file
 write.table(BayPassInput, 'BayPassInputNew.txt', col.names = FALSE, row.names = FALSE)
+
+# make the scaffold-pos data
+scaf_pos<-wrk %>%
+	filter(pop == "B1") %>%
+		select(scaf, pos, id)
+
+write.csv(scaf_pos, "scaf_pos.csv")
+
 
 # make the covariate File
 covs<-read.csv("~/Documents/Repos/BayPass/pH_Temp_Lat_8_ponds.csv")

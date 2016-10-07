@@ -19,7 +19,6 @@ corrplot(omega_plot,method = "square", order = 'hclust',mar = c(2,1,1,0))
 plot(hclust(dist(omega_plot), 'complete'))
 
 
-
 # # This needs to be developed to establish the criteria for detecting XtX outlier
 # # DETAIL provided by Gautier
 
@@ -37,8 +36,12 @@ plot(hclust(dist(omega_plot), 'complete'))
 	# remove.fixed.loci = F)
 
 
-
 # The real games begin here.
+
+## =========================================================
+## read in ALL baypass output and processing
+## to be use in identification of outliers and plotting
+## =========================================================
 
 load('BayPassInterpret.RData') # this should eliminate data reading and prep for 
 
@@ -74,18 +77,26 @@ load('BayPassInterpret.RData') # this should eliminate data reading and prep for
 # betaThreshold$COVARIABLE<-c("Lat/pH", "Temp", "Predation")
 # betaThreshold
 
-# df_latpH<-data.frame(one, XtX = XtX_Emp$M_XtX)
-# df_temp<-data.frame(two, XtX = XtX_Emp$M_XtX)
-# df_predation<-data.frame(three, XtX = XtX_Emp$M_XtX)
+# # scaf positions and ID to add to dfs
+# scaf_pos<-read.csv('scaf_pos.csv')
 
-# one_keypts<-filter(df_latpH, BF.dB. > as.numeric(betaThreshold[1,2]) & XtX > XtX_threshold) # 2890
-# two_keypts<-filter(df_temp, BF.dB. > as.numeric(betaThreshold[2,2]) & XtX > XtX_threshold) # 2890
-# three_keypts<-filter(df_predation, BF.dB. > as.numeric(betaThreshold[3,2]) & XtX > XtX_threshold) # 2890
+# # create df of bayes factors and XtX and scaf positions
+# df_latpH<-data.frame(one, XtX = XtX_Emp$M_XtX, scaf_pos)
+# df_temp<-data.frame(two, XtX = XtX_Emp$M_XtX, scaf_pos)
+# df_predation<-data.frame(three, XtX = XtX_Emp$M_XtX, scaf_pos)
 
+# these are the outliers based on XtX and bayes factor for each 
+latpH_keyptsID<-filter(df_latpH, BF.dB. > as.numeric(betaThreshold[1,2]) & XtX > XtX_threshold) # 2890
+temp_keyptsID<-filter(df_temp, BF.dB. > as.numeric(betaThreshold[2,2]) & XtX > XtX_threshold) # 2890
+predation_keyptsID<-filter(df_predation, BF.dB. > as.numeric(betaThreshold[3,2]) & XtX > XtX_threshold) # 2890
+
+#save(latpH_keyptsID, temp_keyptsID, predation_keyptsID, file = 'outliers.RData')
+
+# Produce outlier figures
 par(mfrow = c(1,3))
 #latitude/pH
 plot(BF.dB. ~ XtX, data = df_latpH, pch = '.', col = '#00000033', ylim = c(-10,60))
-points(BF.dB. ~ XtX, data = one_keypts, pch = 21, col = 'grey')
+points(BF.dB. ~ XtX, data = latpH_keypts, pch = 21, col = 'grey')
 abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
 abline(h = betaThreshold[1,2], lty = 3, lwd = 2, col = 'green')
 legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
@@ -93,7 +104,7 @@ title('Latitude/pH')
 
 # temp
 plot(BF.dB. ~ XtX, data = df_temp, pch = '.', col = '#00000033', ylim = c(-10,60))
-points(BF.dB. ~ XtX, data = two_keypts, pch = 21, col = 'grey')
+points(BF.dB. ~ XtX, data = temp_keypts, pch = 21, col = 'grey')
 abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
 abline(h = betaThreshold[2,2], lty = 3, lwd = 2, col = 'green')
 legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
@@ -101,7 +112,7 @@ title('Temperature')
 
 # predation
 plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))
-points(BF.dB. ~ XtX, data = three_keypts, pch = 21, col = 'grey')
+points(BF.dB. ~ XtX, data = predation_keypts, pch = 21, col = 'grey')
 abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
 abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')
 legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
