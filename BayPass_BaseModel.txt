@@ -18,3 +18,7 @@ g_baypass -npop 7 -gfile Allelefile_noNM2 -efile prENVFILE_noNM2 -poolsizefile S
 g_baypass -npop 7 -gfile Allelefile_noStav -efile prENVFILE_noStav -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noStav_ &
 g_baypass -npop 7 -gfile Allelefile_noW1 -efile prENVFILE_noW1 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noW1_ &
 g_baypass -npop 7 -gfile Allelefile_noW6 -efile prENVFILE_noW6 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noW6_ &
+
+
+# did _noNM2 finish really fast?  It has v. different parameters etc.
+g_baypass -npop 7 -gfile Allelefile_noNM2 -efile prENVFILE_noNM2 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noNM2_v2_ &
