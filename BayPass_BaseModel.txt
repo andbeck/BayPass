@@ -20,5 +20,16 @@ g_baypass -npop 7 -gfile Allelefile_noW1 -efile prENVFILE_noW1 -poolsizefile SAM
 g_baypass -npop 7 -gfile Allelefile_noW6 -efile prENVFILE_noW6 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noW6_ &
 
 
+# run all again
+
 # did _noNM2 finish really fast?  It has v. different parameters etc.
 g_baypass -npop 7 -gfile Allelefile_noNM2 -efile prENVFILE_noNM2 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noNM2_v2_ &
+
+# run rest
+g_baypass -npop 7 -gfile Allelefile_noB1 -efile prENVFILE_noB1 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noB1_v2_ &
+g_baypass -npop 7 -gfile Allelefile_noBag -efile prENVFILE_noBag -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noBag_v2_ &
+g_baypass -npop 7 -gfile Allelefile_noD8 -efile prENVFILE_noD8 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noD8_v2_ &
+g_baypass -npop 7 -gfile Allelefile_noD10 -efile prENVFILE_noD10 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noD10_v2_ &
+g_baypass -npop 7 -gfile Allelefile_noStav -efile prENVFILE_noStav -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noStav_v2_ &
+g_baypass -npop 7 -gfile Allelefile_noW1 -efile prENVFILE_noW1 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noW1_v2_ &
+g_baypass -npop 7 -gfile Allelefile_noW6 -efile prENVFILE_noW6 -poolsizefile SAMPLEFILE_Jack -d0yij 20 -nthreads 3 -outprefix ana.noW6_v2_ &
