@@ -2,7 +2,7 @@
 # the & sends the job to the background
 # the cores is nthreads.
 
-g_baypass -npop 8 -gfile ALLELEFILE -efile prENVFILE -poolsizefile SAMPLEFILE -d0yij 20 -nthreads 8 -outprefix ana1_ &
+g_baypass -npop 8 -gfile ALLELEFILE -efile prENVFILE -poolsizefile SAMPLEFILE -d0yij 20 -nthreads 8 -outprefix anaprEnvfile_ &
 
 # simulated data for percentiles and outlier thresholds
 

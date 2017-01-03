@@ -65,23 +65,27 @@ readcounts<-list(
 	readcounts_NoW6<-geno2YN("/Volumes/TTYLMF/ALLELEFILE_noW6")
 )
 
-simDat<-list()
+simDat2<-list()
 
 for(i in 1:8){
-	simDat[[i]]<-
+	simDat2[[i]]<-
 	simulate.baypass(omegas[[i]],nsnp=25000,
 		beta.pi = pi.params[[i]],
 		sample.size = poolsize, 
 		coverage=readcounts[[i]]$NN,
 		pi.maf = 0.01,
-		suffix="pods",
+		suffix=paste("no_",pops[i],"_pods", sep=""),
 		remove.fixed.loci = F)
 }
 
 ### RUN BayPass on JackSimDat.RData files.
 ### Might need to export each independently from simDat list.
 
+load('/Volumes/TTYLMF/JackSimDat.RData')
 
+for(i in 1:8){
+	
+}
 
 # The real games begin here.
 
