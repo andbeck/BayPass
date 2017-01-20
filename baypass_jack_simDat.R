@@ -78,6 +78,18 @@ for(i in 1:8){
 		remove.fixed.loci = F)
 }
 
+# NM2 Simulated Analysis was missing
+outNM2<-simulate.baypass(omegaNoNM2,nsnp=25000,
+                         beta.pi = pi.params.NoNM2,
+                         sample.size = poolsize, 
+                         coverage=readcounts_NoNM2$NN,
+                         pi.maf = 0.01,
+                         suffix=paste("no_",pops[5],"_pods", sep=""),
+                         remove.fixed.loci = F)
+
+
+
+
 ### RUN BayPass on JackSimDat.RData files.
 ### Might need to export each independently from simDat list.
 
