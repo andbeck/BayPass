@@ -9,6 +9,8 @@ library(qqman)
 
 source('baypass_utils.R') # this is in the repo
 
+setwd('/Volumes/TTYLMF')
+
 # Covariance matrix
 omega<-as.matrix(read.table("anaprEnvfile__mat_omega.out"))
 omega<-matrix(omega, 8,8, byrow = TRUE, dimnames=list(c(paste("pop:",1:8)), c(paste("pop:",1:8))))
@@ -87,8 +89,28 @@ load('BayPassInterpret.RData') # this should eliminate data reading and prep for
 
 # these are the outliers based on XtX and bayes factor for each 
 latpH_keyptsID<-filter(df_latpH, BF.dB. > as.numeric(betaThreshold[1,2]) & XtX > XtX_threshold) # 2890
-temp_keyptsID<-filter(df_temp, BF.dB. > as.numeric(betaThreshold[2,2]) & XtX > XtX_threshold) # 2890
-predation_keyptsID<-filter(df_predation, BF.dB. > as.numeric(betaThreshold[3,2]) & XtX > XtX_threshold) # 2890
+temp_keyptsID<-filter(df_temp, BF.dB. > as.numeric(betaThreshold[2,2]) & XtX > XtX_threshold) # 2531
+predation_keyptsID<-filter(df_predation, BF.dB. > as.numeric(betaThreshold[3,2]) & XtX > XtX_threshold) # 3094
+
+# use VennDiagram and gplots
+library(VennDiagram)
+library(gplots)
+
+# create list of MRKs
+All<-list(latpH = latpH_keyptsID$MRK,temp = temp_keyptsID$MRK, predation = predation_keyptsID$MRK)
+# build plot
+vennPlot<-venn.diagram(All, NULL, fill = c('blue','orange','green'), alpha = c(0.5,0.5,0.5), cex = 3, cat.cex = 2)
+# draw plot
+grid.draw(vennPlot)
+
+#  Hmmm - bit different numbers...
+# # These are common to all three
+# length(Reduce(intersect, list(latpH_keyptsID$MRK, temp_keyptsID$MRK, predation_keyptsID$MRK)))
+# 
+# # THese are common to pairs
+# length(Reduce(intersect, list(latpH_keyptsID$MRK, predation_keyptsID$MRK)))
+# length(Reduce(intersect, list(temp_keyptsID$MRK, predation_keyptsID$MRK)))
+
 
 #save(latpH_keyptsID, temp_keyptsID, predation_keyptsID, file = 'outliers.RData')
 
@@ -96,7 +118,7 @@ predation_keyptsID<-filter(df_predation, BF.dB. > as.numeric(betaThreshold[3,2])
 par(mfrow = c(1,3))
 #latitude/pH
 plot(BF.dB. ~ XtX, data = df_latpH, pch = '.', col = '#00000033', ylim = c(-10,60))
-points(BF.dB. ~ XtX, data = latpH_keypts, pch = 21, col = 'grey')
+points(BF.dB. ~ XtX, data = latpH_keyptsID, pch = 21, col = 'grey')
 abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
 abline(h = betaThreshold[1,2], lty = 3, lwd = 2, col = 'green')
 legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
@@ -104,7 +126,7 @@ title('Latitude/pH')
 
 # temp
 plot(BF.dB. ~ XtX, data = df_temp, pch = '.', col = '#00000033', ylim = c(-10,60))
-points(BF.dB. ~ XtX, data = temp_keypts, pch = 21, col = 'grey')
+points(BF.dB. ~ XtX, data = temp_keyptsID, pch = 21, col = 'grey')
 abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
 abline(h = betaThreshold[2,2], lty = 3, lwd = 2, col = 'green')
 legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
@@ -112,7 +134,7 @@ title('Temperature')
 
 # predation
 plot(BF.dB. ~ XtX, data = df_predation, pch = '.', col = '#00000033', ylim = c(-10,60))
-points(BF.dB. ~ XtX, data = predation_keypts, pch = 21, col = 'grey')
+points(BF.dB. ~ XtX, data = predation_keyptsID, pch = 21, col = 'grey')
 abline(v = XtX_threshold, lty = 3, lwd = 2, col = 'red')
 abline(h = betaThreshold[3,2], lty = 3, lwd = 2, col = 'green')
 legend(5,60, legend = c("XtX Threshold", "BayesFactor Threshold", "Outliers"), lty=c(3,3,NA), pch = c(NA, NA, 21), col = c('red', 'green', 'grey'))
